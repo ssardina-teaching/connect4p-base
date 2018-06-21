@@ -31,7 +31,7 @@ The code was written in **Python 3.6** In order to display the game's GUI, we us
 
 ### Testing
 
-Run `python -m pytest tests/`
+Run `pipenv run python -m pytest tests/` (You can omit `pipenv run` if you're in a `pipenv shell`)
 
 ### Linting and Code Formatting
 
