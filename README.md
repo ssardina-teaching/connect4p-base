@@ -37,4 +37,4 @@ Run `pipenv run python -m pytest tests/` (You can omit `pipenv run` if you're in
 
 This project uses [`black`](https://github.com/ambv/black) to keep code neat and standardised. It should already have been installed during project installation (see [Installation](#installation) section).
 
-Run `black` with: `black connectfour tests`
+Run `black` with: `pipenv run black connectfour tests` (You can omit `pipenv run` if you're in a `pipenv shell`)
