@@ -48,19 +48,22 @@ def main():
     args = parser.parse_args()
 
     if args.player_one == "HumanPlayer":
-        print("using default")
         player_one = HumanPlayer("Player 1")
     elif args.player_two == "RandomAgent":
         player_one = RandomAgent("Player 1")
-    else:
+    elif args.player_two == "MonteCarloAgent":
         player_one = MonteCarloAgent("Player 1")
+    else:
+        raise RuntimeError("'{}' is not a valid player type".format(args.player_one))
 
     if args.player_two == "HumanPlayer":
         player_two = HumanPlayer("Player 2")
     elif args.player_two == "RandomAgent":
         player_two = RandomAgent("Player 2")
-    else:
+    elif args.player_two == "MonteCarloAgent":
         player_two = MonteCarloAgent("Player 2")
+    else:
+        raise RuntimeError("'{}' is not a valid player type".format(args.player_two))
 
     start_game(Game(player_one, player_two))
 

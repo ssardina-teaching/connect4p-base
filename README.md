@@ -18,6 +18,20 @@ Connect 4 is a two-player game in which the players take turns dropping colored 
 3. `python -m connectfour.game` (default configuration will be run)
 ```
 
+### Configuration and CLI
+
+Currently this game allows only for the specification of particular player types for each player. This is done with the `--player-one XXX` and `--player-two YYY` options. The currently available player types are:
+
+* `HumanPlayer` - Player is controlled by user via GUI **[DEFAULT OPTION]**
+* `RandomAgent` - Player is controlled by computer and just chooses random valid columns to place token
+* `MonteCarloAgent` - Player is controlled by computer and uses Monte Carlo Tree Search to find a good move
+
+As an example, we can run:
+
+`python -m connectfour.game --player-one RandomAgent --player-two HumanPlayer`
+
+To have a `RandomAgent` play against yourself.
+
 ## Setup
 
 ### Prerequisites
@@ -37,4 +51,4 @@ Run `pipenv run python -m pytest tests/` (You can omit `pipenv run` if you're in
 
 This project uses [`black`](https://github.com/ambv/black) to keep code neat and standardised. It should already have been installed during project installation (see [Installation](#installation) section).
 
-Run `black` with: `pipenv run black connectfour tests` (You can omit `pipenv run` if you're in a `pipenv shell`)
+Run `black` with: `pipenv run black connectfour tests` g(You can omit `pipenv run` if you're in a `pipenv shell`)
