@@ -1,7 +1,7 @@
-'''
+"""
 Module to utility functionality to aid students in building
 Connect Four playing agents.
-'''
+"""
 
 
 def manhattan_distance(start, end):

@@ -7,6 +7,7 @@ class Node:
     """
     Data structure to keep track of our search
     """
+
     def __init__(self, state, parent=None):
         self.visits = 1
         self.reward = 0.0

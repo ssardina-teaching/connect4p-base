@@ -7,7 +7,7 @@ from tkinter import Frame, Canvas, Tk, Label, NSEW, Button
 import tkinter.font
 import copy
 
-LEFT_MOUSE_CLICK = '<Button-1>'
+LEFT_MOUSE_CLICK = "<Button-1>"
 
 
 class Info(Frame):
@@ -27,7 +27,8 @@ class Point(object):
     """
     Each one of the circles in the board
     """
-    OUTLINE_COLOR = 'blue'
+
+    OUTLINE_COLOR = "blue"
     RADIUS = 30
 
     def __init__(self, x, y, canvas, color="white"):
@@ -55,9 +56,10 @@ class Terrain(Canvas):
     """
     Board visual representation
     """
-    PLAYER_ONE_TOKEN_COLOR = 'yellow'
-    PLAYER_TWO_TOKEN_COLOR = 'red'
-    EMPTY_SLOT_COLOR = 'white'
+
+    PLAYER_ONE_TOKEN_COLOR = "yellow"
+    PLAYER_TWO_TOKEN_COLOR = "red"
+    EMPTY_SLOT_COLOR = "white"
 
     def __init__(self, game, info, master=None):
         """
@@ -145,7 +147,7 @@ class Terrain(Canvas):
             self.update()
 
     def setPostMoveState(self):
-        whos_turn_txt = '{}\'s Turn'.format(str(self.game.current_player))
+        whos_turn_txt = "{}'s Turn".format(str(self.game.current_player))
         self.info.t.config(text=whos_turn_txt)
 
         result = self.b.winner()

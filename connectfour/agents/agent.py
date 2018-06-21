@@ -1,4 +1,4 @@
-class Agent():
+class Agent:
     def __init__(self, name):
         self.name = name
 
@@ -17,7 +17,7 @@ class Agent():
         return self.name
 
 
-class HumanPlayer():
+class HumanPlayer:
     def __init__(self, name):
         self.name = name
 

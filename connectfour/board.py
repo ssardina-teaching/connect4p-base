@@ -8,7 +8,7 @@ dy = [1, 0, -1, 1]
 class Board(object):
     DEFAULT_WIDTH = 7
     DEFAULT_HEIGHT = 6
-    
+
     def __init__(self, board=None, last_move=[None, None]):
         self.board = board if board is not None else self._empty_board()
         self.width = len(self.board[0])

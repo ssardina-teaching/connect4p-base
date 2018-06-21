@@ -5,10 +5,11 @@ from connectfour.agents.computer_player import MonteCarloAgent, RandomAgent
 from connectfour.agents.agent import HumanPlayer
 
 
-class Game():
+class Game:
     """
     Manages the players of the Game
     """
+
     PLAYER_ONE_ID = -1
     PLAYER_TWO_ID = 1
 
@@ -27,34 +28,42 @@ class Game():
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Set up the game.')
-    parser.add_argument('--player-one', dest='player_one', action='store',
-                        default='HumanPlayer',
-                        help='Set the agent for player one of the game')
+    parser = argparse.ArgumentParser(description="Set up the game.")
+    parser.add_argument(
+        "--player-one",
+        dest="player_one",
+        action="store",
+        default="HumanPlayer",
+        help="Set the agent for player one of the game",
+    )
 
-    parser.add_argument('--player-two', dest='player_two', action='store',
-                        default='HumanPlayer',
-                        help='Set the agent for player two of the game')
+    parser.add_argument(
+        "--player-two",
+        dest="player_two",
+        action="store",
+        default="HumanPlayer",
+        help="Set the agent for player two of the game",
+    )
 
     args = parser.parse_args()
 
-    if args.player_one == 'HumanPlayer':
+    if args.player_one == "HumanPlayer":
         print("using default")
-        player_one = HumanPlayer('Player 1')
-    elif args.player_two == 'RandomAgent':
-        player_one = RandomAgent('Player 1')
+        player_one = HumanPlayer("Player 1")
+    elif args.player_two == "RandomAgent":
+        player_one = RandomAgent("Player 1")
     else:
-        player_one = MonteCarloAgent('Player 1')
+        player_one = MonteCarloAgent("Player 1")
 
-    if args.player_two == 'HumanPlayer':
-        player_two = HumanPlayer('Player 2')
-    elif args.player_two == 'RandomAgent':
-        player_two = RandomAgent('Player 2')
+    if args.player_two == "HumanPlayer":
+        player_two = HumanPlayer("Player 2")
+    elif args.player_two == "RandomAgent":
+        player_two = RandomAgent("Player 2")
     else:
-        player_two = MonteCarloAgent('Player 2')
+        player_two = MonteCarloAgent("Player 2")
 
     start_game(Game(player_one, player_two))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

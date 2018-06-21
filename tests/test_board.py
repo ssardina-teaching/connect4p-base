@@ -1,7 +1,7 @@
 from connectfour.board import Board
 
 
-class TestBoard():
+class TestBoard:
     def test_try_move_on_valid_column(self):
         board = Board()
 
@@ -20,7 +20,7 @@ class TestBoard():
         # Placement in column should now fail
         assert board.tryMove(column_to_fill) == -1
         # Other columns should still be valid
-        assert board.tryMove(column_to_fill+1) >= 0
+        assert board.tryMove(column_to_fill + 1) >= 0
 
     def test_valid_move_on_valid_move(self):
         board = Board()
