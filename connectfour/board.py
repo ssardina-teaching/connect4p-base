@@ -21,7 +21,7 @@ class Board(object):
         by the column. Returns the appropiate row where the
         piece will be located. If it's not found it returns -1.
         """
-        if move < 0 or move >= self.DEFAULT_WIDTH or self.board[0][move] != 0:
+        if move < 0 or move >= self.width or self.board[0][move] != 0:
             return -1
 
         for i in range(len(self.board)):
