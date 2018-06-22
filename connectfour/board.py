@@ -9,8 +9,11 @@ class Board(object):
     DEFAULT_WIDTH = 7
     DEFAULT_HEIGHT = 6
 
-    def __init__(self, board=None, last_move=[None, None]):
-        self.board = board if board is not None else self._empty_board()
+    def __init__(self, board=None, height=None, width=None, last_move=[None, None]):
+        if board is not None and (height is not None or width is not None):
+            raise RuntimeError('Cannot specify both a board and a board size value')
+
+        self.board = board if board is not None else self._empty_board(height, width)
         self.width = len(self.board[0])
         self.height = len(self.board)
         self.last_move = last_move
@@ -72,11 +75,19 @@ class Board(object):
             aux.last_move = [row, moves[ind]]
         return aux
 
-    def _empty_board(self):
+    def _empty_board(self, height, width):
+        if height is None:
+            height = self.DEFAULT_HEIGHT
+        if width is None:
+            width = self.DEFAULT_WIDTH
+
+        if height <= 0 or width <= 0:
+            raise ValueError('height or width of board cannot be less than 1')
+
         board = []
-        for i in range(self.DEFAULT_HEIGHT):
+        for i in range(height):
             row = []
-            for j in range(self.DEFAULT_WIDTH):
+            for j in range(width):
                 row.append(0)
             board.append(row)
         return board
@@ -87,46 +98,70 @@ class Board(object):
         If the game has a winner, it returns the player number (Player One = 1, Player Two = -1).
         If the game is still ongoing, it returns zero.
         """
+        row_winner = self._check_rows()
+        if row_winner:
+            return row_winner
+        col_winner = self._check_columns()
+        if col_winner:
+            return col_winner
+        diag_winner = self._check_diagonals()
+        if diag_winner:
+            return diag_winner
+        return 0  # no winner yet
 
-        x = self.last_move[0]
-        y = self.last_move[1]
-
-        if x is None:
-            return 0
-
-        for d in range(4):
-
-            h_counter = 0
-            c_counter = 0
-
-            u = x - 3 * dx[d]
-            v = y - 3 * dy[d]
-
-            for k in range(-3, 4):
-
-                u = x + k * dx[d]
-                v = y + k * dy[d]
-
-                if u < 0 or u >= 6:
-                    continue
-
-                if v < 0 or v >= 7:
-                    continue
-
-                if self.board[u][v] == -1:
-                    c_counter = 0
-                    h_counter += 1
-                elif self.board[u][v] == 1:
-                    h_counter = 0
-                    c_counter += 1
+    def _check_rows(self):
+        for row in self.board:
+            same_count = 1
+            curr = row[0]
+            for i in range(1, self.width):
+                if row[i] == curr:
+                    same_count += 1
+                    if same_count == 4 and curr != 0:
+                        return curr
                 else:
-                    h_counter = 0
-                    c_counter = 0
+                    same_count = 1
+                    curr = row[i]
+        return 0
 
-                if h_counter == 4:
-                    return -1
+    def _check_columns(self):
+        for i in range(self.width):
+            same_count = 1
+            curr = self.board[0][i]
+            for j in range(1, self.height):
+                if self.board[j][i] == curr:
+                    same_count += 1
+                    if same_count == 4 and curr != 0:
+                        return curr
+                else:
+                    same_count = 1
+                    curr = self.board[j][i]
+        return 0
 
-                if c_counter == 4:
-                    return 1
+    def _check_diagonals(self):
+        boards = [
+            self.board,
+            [row[::-1] for row in copy.deepcopy(self.board)]
+        ]
 
+        for b in boards:
+            for i in range(self.width - 4 + 1):
+                for j in range(self.height - 4 + 1):
+                    if i > 0 and j > 0:  # would be a redundant diagonal
+                        continue
+
+                    # (j, i) is start of diagonal
+                    same_count = 1
+                    curr = b[j][i]
+                    print('({}, {})'.format(j, i))
+                    k, m = j + 1, i + 1
+                    while k < self.height and m < self.width:
+                            if b[k][m] == curr:
+                                same_count += 1
+                                if same_count is 4 and curr != 0:
+                                    return curr
+                            else:
+                                same_count = 1
+                                curr = b[k][m]
+                            k += 1
+                            m += 1
         return 0

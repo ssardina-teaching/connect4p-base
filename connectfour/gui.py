@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from connectfour.board import Board
 from connectfour.agents.agent import HumanPlayer
 
 from tkinter import Frame, Canvas, Tk, Label, NSEW, Button
@@ -8,6 +7,8 @@ import tkinter.font
 import copy
 
 LEFT_MOUSE_CLICK = "<Button-1>"
+ROW_SPACE = int(400 / 6)
+COL_SPACE = int(500 / 7)
 
 
 class Info(Frame):
@@ -69,28 +70,26 @@ class Terrain(Canvas):
             master: This represents the parent window. (required by Canvas superclass)
         """
         Canvas.__init__(self)
-        self.configure(width=500, height=400, bg="blue")
 
         self.p = []
         self.game = game
         self.info = info
         self.winner = False
-
-        board = []
-        for i in range(6):
-            row = []
-            for j in range(7):
-                row.append(0)
-            board.append(row)
-
-        self.b = Board()
+        self.b = game.board
         self.last_bstate = self.b
 
-        for i in range(0, 340, int(400 / 6)):
-            spots = []
-            for j in range(0, 440, int(500 / 7)):
-                spots.append(Point(j, i, self))
+        self.configure(
+            width=COL_SPACE * self.b.width,
+            height=ROW_SPACE * self.b.height,
+            bg="blue"
+        )
 
+        for i in range(self.b.height):
+            spots = []
+            for j in range(self.b.width):
+                spots.append(
+                    Point(j*COL_SPACE, i*ROW_SPACE, self)
+                )
             self.p.append(spots)
 
         self.bind(LEFT_MOUSE_CLICK, self.action)
@@ -108,8 +107,8 @@ class Terrain(Canvas):
         if i is None:
             if bstate is not None:
                 self.b = copy.deepcopy(bstate)
-            for i in range(6):
-                for j in range(7):
+            for i in range(self.b.height):
+                for j in range(self.b.width):
                     self.reloadBoard(i, j, val=None, bstate=None)
         elif val is None:
             if self.b.board[i][j] == -1:
@@ -191,11 +190,13 @@ def game_loop(root, game, terrain):
 
 def start_game(game):
     root = Tk()
-    root.geometry("500x550")
+    root_height = game.board.height * ROW_SPACE
+    root_width = game.board.width * COL_SPACE
+    bottom_buttons_padding = 500
+    root.geometry("{}x{}".format(root_width, root_height + bottom_buttons_padding))
     root.title("Connect 4 AI Bot")
     root.configure(bg="white")
-    root.minsize(500, 600)
-    root.maxsize(500, 600)
+    root.minsize(root_height, root_width)
 
     info = Info(root)
     info.grid(row=0, column=0)

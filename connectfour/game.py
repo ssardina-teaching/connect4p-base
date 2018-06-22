@@ -1,6 +1,7 @@
 import argparse
 
 from connectfour.gui import start_game
+from connectfour.board import Board
 from connectfour.agents.computer_player import MonteCarloAgent, RandomAgent
 from connectfour.agents.agent import HumanPlayer
 
@@ -13,12 +14,13 @@ class Game:
     PLAYER_ONE_ID = -1
     PLAYER_TWO_ID = 1
 
-    def __init__(self, player_one, player_two):
+    def __init__(self, player_one, player_two, board_height, board_width):
         self.player_one = player_one
         self.player_two = player_two
         self.current_player = self.player_one
         self.player_one.id = self.PLAYER_ONE_ID
         self.player_two.id = self.PLAYER_TWO_ID
+        self.board = Board(height=board_height, width=board_width)
 
     def change_turn(self):
         if self.current_player == self.player_one:
@@ -36,7 +38,6 @@ def main():
         default="HumanPlayer",
         help="Set the agent for player one of the game",
     )
-
     parser.add_argument(
         "--player-two",
         dest="player_two",
@@ -44,14 +45,30 @@ def main():
         default="HumanPlayer",
         help="Set the agent for player two of the game",
     )
+    parser.add_argument(
+        "--board-height",
+        dest="board_height",
+        action="store",
+        default=None,
+        type=int,
+        help="Set the number of rows in the board",
+    )
+    parser.add_argument(
+        "--board-width",
+        dest="board_width",
+        action="store",
+        default=None,
+        type=int,
+        help="Set the number of columns in the board",
+    )
 
     args = parser.parse_args()
 
     if args.player_one == "HumanPlayer":
         player_one = HumanPlayer("Player 1")
-    elif args.player_two == "RandomAgent":
+    elif args.player_one == "RandomAgent":
         player_one = RandomAgent("Player 1")
-    elif args.player_two == "MonteCarloAgent":
+    elif args.player_one == "MonteCarloAgent":
         player_one = MonteCarloAgent("Player 1")
     else:
         raise RuntimeError("'{}' is not a valid player type".format(args.player_one))
@@ -65,7 +82,13 @@ def main():
     else:
         raise RuntimeError("'{}' is not a valid player type".format(args.player_two))
 
-    start_game(Game(player_one, player_two))
+    g = Game(
+        player_one,
+        player_two,
+        args.board_height,
+        args.board_width,
+    )
+    start_game(g)
 
 
 if __name__ == "__main__":
