@@ -20,7 +20,7 @@ class Info(Frame):
         Frame.__init__(self)
         self.configure(width=500, height=100, bg="white")
         police = tkinter.font.Font(family="Arial", size=36, weight="bold")
-        self.t = Label(self, text="Connect4 AI", font=police, bg="white")
+        self.t = Label(self, text="Connect4", font=police, bg="white")
         self.t.grid(sticky=NSEW, pady=20)
 
 
@@ -165,8 +165,9 @@ class Terrain(Canvas):
         """
         Single human and computer step back
         """
+        # TODO: Currently broken
         self.winner = False
-        info.t.config(text="Your turn")
+        self.info.t.config(text="Your turn")
         self.reloadBoard(bstate=self.last_bstate)
         self.update()
 
@@ -206,25 +207,16 @@ def start_game(game):
 
     root.after(0, game_loop(root, game, t))
 
-    def restart():
-        global info
-        info.t.config(text="")
-
-        info = Info(root)
-        info.grid(row=0, column=0)
-
-        t = Terrain(root)
-        t.grid(row=1, column=0)
-
-    def step_back():
-        global t
-        t.step_back()
+    # TODO Legacy feature: Currently doesn't work properly
+    # def step_back(terrain):
+    #     def inner():
+    #         terrain.step_back()
+    #     return inner
 
     def close():
         root.destroy()
 
-    Button(root, text="Try again (?)", command=restart).grid(row=3, column=0, pady=5)
-    Button(root, text="Step back", command=step_back).grid(row=2, column=0, pady=2)
+    # Button(root, text="Step back", command=step_back(t)).grid(row=2, column=0, pady=2)
     Button(root, text="Exit", command=close).grid(row=4, column=0, pady=2)
 
     root.mainloop()

@@ -48,7 +48,7 @@ def MTCS(maxIter, root, factor, player_id):
         backup(front, reward, turn)
 
     ans = bestChild(root, 0)
-    print([(c.reward / c.visits) for c in ans.parent.children])
+    # print([(c.reward / c.visits) for c in ans.parent.children])
     return ans
 
 

@@ -152,7 +152,6 @@ class Board(object):
                     # (j, i) is start of diagonal
                     same_count = 1
                     curr = b[j][i]
-                    print('({}, {})'.format(j, i))
                     k, m = j + 1, i + 1
                     while k < self.height and m < self.width:
                             if b[k][m] == curr:

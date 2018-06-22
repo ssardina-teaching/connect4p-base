@@ -28,6 +28,10 @@ class Game:
         else:
             self.current_player = self.player_one
 
+    def reset(self):
+        self.board = Board(height=self.board.height, width=self.board.width)
+        self.current_player = self.player_one
+
 
 def main():
     parser = argparse.ArgumentParser(description="Set up the game.")
