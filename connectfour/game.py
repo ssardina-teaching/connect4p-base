@@ -8,6 +8,12 @@ from connectfour.agents.agent import HumanPlayer
 MAX_GAME_WIDTH = MAX_GAME_HEIGHT = 100
 MIN_GAME_WIDTH = MIN_GAME_HEIGHT = 4
 
+PLAYER_TYPE_MAP = {
+    'HumanPlayer': HumanPlayer,
+    'RandomAgent': RandomAgent,
+    'MonteCarloAgent': MonteCarloAgent
+}
+
 
 class Game:
     """
@@ -81,23 +87,15 @@ def main():
 
     args = parser.parse_args()
 
-    if args.player_one == "HumanPlayer":
-        player_one = HumanPlayer("Player 1")
-    elif args.player_one == "RandomAgent":
-        player_one = RandomAgent("Player 1")
-    elif args.player_one == "MonteCarloAgent":
-        player_one = MonteCarloAgent("Player 1")
-    else:
+    if args.player_one not in PLAYER_TYPE_MAP:
         raise RuntimeError("'{}' is not a valid player type".format(args.player_one))
-
-    if args.player_two == "HumanPlayer":
-        player_two = HumanPlayer("Player 2")
-    elif args.player_two == "RandomAgent":
-        player_two = RandomAgent("Player 2")
-    elif args.player_two == "MonteCarloAgent":
-        player_two = MonteCarloAgent("Player 2")
     else:
+        player_one = PLAYER_TYPE_MAP[args.player_one]("Player 1")
+
+    if args.player_two not in PLAYER_TYPE_MAP:
         raise RuntimeError("'{}' is not a valid player type".format(args.player_two))
+    else:
+        player_two = PLAYER_TYPE_MAP[args.player_two]("Player 2")
 
     g = Game(
         player_one,
