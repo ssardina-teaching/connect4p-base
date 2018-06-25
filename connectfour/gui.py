@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
 from connectfour.agents.agent import HumanPlayer
+from connectfour.util import delay_move_execution
 
-from tkinter import Frame, Canvas, Tk, Label, NSEW, Button
-import tkinter.font
 import copy
+import tkinter.font
+from tkinter import Frame, Canvas, Tk, Label, NSEW, Button
 
 LEFT_MOUSE_CLICK = "<Button-1>"
 ROW_SPACE = int(400 / 6)
@@ -93,6 +94,8 @@ class Terrain(Canvas):
             self.p.append(spots)
 
         self.bind(LEFT_MOUSE_CLICK, self.action)
+        if not self.game.fast_play:
+            self.runComputerMove = delay_move_execution(self.runComputerMove)
 
     def reloadBoard(self, i=None, j=None, val=None, bstate=None):
         """
@@ -195,7 +198,7 @@ def start_game(game):
     t = Terrain(game, info, root)
     t.grid(row=1, column=0)
 
-    root.after(0, game_loop(root, game, t))
+    root.after(0, game_loop(root, game, t))  # run game loop function as often as possible
 
     def close():
         root.destroy()

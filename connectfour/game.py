@@ -5,6 +5,9 @@ from connectfour.board import Board
 from connectfour.agents.computer_player import MonteCarloAgent, RandomAgent
 from connectfour.agents.agent import HumanPlayer
 
+MAX_GAME_WIDTH = MAX_GAME_HEIGHT = 100
+MIN_GAME_WIDTH = MIN_GAME_HEIGHT = 4
+
 
 class Game:
     """
@@ -14,13 +17,14 @@ class Game:
     PLAYER_ONE_ID = -1
     PLAYER_TWO_ID = 1
 
-    def __init__(self, player_one, player_two, board_height, board_width):
+    def __init__(self, player_one, player_two, board_height, board_width, fast_play=False):
         self.player_one = player_one
         self.player_two = player_two
         self.current_player = self.player_one
         self.player_one.id = self.PLAYER_ONE_ID
         self.player_two.id = self.PLAYER_TWO_ID
         self.board = Board(height=board_height, width=board_width)
+        self.fast_play = fast_play
 
     def change_turn(self):
         if self.current_player == self.player_one:
@@ -55,6 +59,8 @@ def main():
         action="store",
         default=None,
         type=int,
+        choices=range(MIN_GAME_HEIGHT, MAX_GAME_HEIGHT),
+        metavar="[{}-{}]".format(MIN_GAME_HEIGHT, MAX_GAME_HEIGHT),
         help="Set the number of rows in the board",
     )
     parser.add_argument(
@@ -63,7 +69,14 @@ def main():
         action="store",
         default=None,
         type=int,
+        choices=range(MIN_GAME_WIDTH, MAX_GAME_WIDTH),
+        metavar="[{}-{}]".format(MIN_GAME_WIDTH, MAX_GAME_WIDTH),
         help="Set the number of columns in the board",
+    )
+    parser.add_argument(
+        "--fast",
+        action="store_true",
+        help="disables the delay between computer moves, making the game much faster.",
     )
 
     args = parser.parse_args()
@@ -91,6 +104,7 @@ def main():
         player_two,
         args.board_height,
         args.board_width,
+        args.fast,
     )
     start_game(g)
 
