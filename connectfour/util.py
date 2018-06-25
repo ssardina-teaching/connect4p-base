@@ -13,6 +13,15 @@ def manhattan_distance(start, end):
 
 
 def delay_move_execution(move_fn):
+    """
+    A decorator function that will ensure the wrapped move function
+    takes *at least* a set amount of time to execute. Used to impose
+    a minimum execution time on a computer player move, which acts as a
+    delay on move speed.
+
+    Args:
+        move_fn: The function which executes a computer move. Take no arguments.
+    """
     max_execution_time_in_sec = 1
 
     def wrapper():
