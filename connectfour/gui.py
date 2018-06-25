@@ -161,16 +161,6 @@ class Terrain(Canvas):
             self.info.t.config(text="Draw")
             self.winner = True
 
-    def step_back(self):
-        """
-        Single human and computer step back
-        """
-        # TODO: Currently broken
-        self.winner = False
-        self.info.t.config(text="Your turn")
-        self.reloadBoard(bstate=self.last_bstate)
-        self.update()
-
 
 def game_loop(root, game, terrain):
     def inner():
@@ -207,16 +197,9 @@ def start_game(game):
 
     root.after(0, game_loop(root, game, t))
 
-    # TODO Legacy feature: Currently doesn't work properly
-    # def step_back(terrain):
-    #     def inner():
-    #         terrain.step_back()
-    #     return inner
-
     def close():
         root.destroy()
 
-    # Button(root, text="Step back", command=step_back(t)).grid(row=2, column=0, pady=2)
     Button(root, text="Exit", command=close).grid(row=4, column=0, pady=2)
 
     root.mainloop()
