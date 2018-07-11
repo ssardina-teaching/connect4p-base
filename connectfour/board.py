@@ -18,7 +18,7 @@ class Board(object):
         self.height = len(self.board)
         self.last_move = last_move
 
-    def tryMove(self, move):
+    def try_move(self, move):
         """
         Takes the current board and a possible move specified
         by the column. Returns the appropiate row where the
@@ -32,7 +32,7 @@ class Board(object):
                 return i - 1
         return len(self.board) - 1
 
-    def validMove(self, row, col):
+    def valid_move(self, row, col):
         """
         Take a row, col position on the board and returns whether
         that row value is the bottom-most empty position in the column.
@@ -43,7 +43,7 @@ class Board(object):
 
         Returns: True is move is valid. False, otherwise
         """
-        return row >= 0 and self.tryMove(col) == row
+        return row >= 0 and self.try_move(col) == row
 
     def valid_moves(self):
         """
@@ -79,7 +79,7 @@ class Board(object):
         moves = aux.legal_moves()
         if len(moves) > 0:
             ind = random.randint(0, len(moves) - 1)
-            row = aux.tryMove(moves[ind])
+            row = aux.try_move(moves[ind])
             aux.board[row][moves[ind]] = turn
             aux.last_move = [row, moves[ind]]
         return aux

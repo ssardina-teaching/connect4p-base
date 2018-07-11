@@ -16,7 +16,7 @@ class Node:
         self.children_move = []
         self.parent = parent
 
-    def addChild(self, child_state, move):
+    def add_child(self, child_state, move):
         child = Node(child_state, self)
         self.children.append(child)
         self.children_move.append(move)
@@ -43,21 +43,21 @@ def MTCS(maxIter, root, factor, player_id):
         A new instance of `Board` that includes the best move found.
     """
     for _ in range(maxIter):
-        front, turn = treePolicy(root, player_id, factor)
-        reward = defaultPolicy(front.state, turn)
+        front, turn = tree_policy(root, player_id, factor)
+        reward = default_policy(front.state, turn)
         backup(front, reward, turn)
 
-    ans = bestChild(root, 0)
+    ans = best_child(root, 0)
     # print([(c.reward / c.visits) for c in ans.parent.children])
     return ans
 
 
-def treePolicy(node, turn, factor):
+def tree_policy(node, turn, factor):
     while not node.state.terminal() and node.state.winner() == 0:
         if not node.fully_explored():
             return expand(node, turn), -turn
         else:
-            node = bestChild(node, factor)
+            node = best_child(node, factor)
             turn *= -1
     return node, turn
 
@@ -68,32 +68,32 @@ def expand(node, turn):
 
     for move in possible_moves:
         if move not in tried_children_move:
-            row = node.state.tryMove(move)
+            row = node.state.try_move(move)
             new_state = copy.deepcopy(node.state)
             new_state.board[row][move] = turn
             new_state.last_move = [row, move]
             break
 
-    node.addChild(new_state, move)
+    node.add_child(new_state, move)
     return node.children[-1]
 
 
-def bestChild(node, factor):
+def best_child(node, factor):
     bestscore = -10000000.0
-    bestChildren = []
+    best_children = []
     for c in node.children:
         exploit = c.reward / c.visits
         explore = math.sqrt(math.log(2.0 * node.visits) / float(c.visits))
         score = exploit + factor * explore
         if score == bestscore:
-            bestChildren.append(c)
+            best_children.append(c)
         if score > bestscore:
-            bestChildren = [c]
+            best_children = [c]
             bestscore = score
-    return random.choice(bestChildren)
+    return random.choice(best_children)
 
 
-def defaultPolicy(state, turn):
+def default_policy(state, turn):
     while not state.terminal() and state.winner() == 0:
         state = state.next_state(turn)
         turn *= -1

@@ -9,10 +9,10 @@ class MonteCarloAgent(Agent):
         super().__init__(name)
 
     def get_move(self, board):
-        best_move = self.findBestMove(board)
+        best_move = self.find_best_move(board)
         return self._find_move_from_new_board_state(board.board, best_move.state.board)
 
-    def findBestMove(self, board, factor=2.0):
+    def find_best_move(self, board, factor=2.0):
         """
         Returns the best move using MonteCarlo Tree Search
         """
@@ -44,7 +44,7 @@ class RandomAgent(Agent):
         """
         while True:
             col = random.randint(0, board.width)
-            row = board.tryMove(col)
+            row = board.try_move(col)
 
             if row >= 0:
                 break

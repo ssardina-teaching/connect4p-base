@@ -49,7 +49,7 @@ class Point(object):
             outline=self.OUTLINE_COLOR,
         )
 
-    def setColor(self, color):
+    def set_color(self, color):
         self.canvas.itemconfigure(self.point, fill=color)
         self.color = color
 
@@ -95,9 +95,9 @@ class Terrain(Canvas):
 
         self.bind(LEFT_MOUSE_CLICK, self.action)
         if not self.game.fast_play:
-            self.runComputerMove = delay_move_execution(self.runComputerMove)
+            self.run_computer_move = delay_move_execution(self.run_computer_move)
 
-    def reloadBoard(self, i=None, j=None, val=None, bstate=None):
+    def reload_board(self, i=None, j=None, val=None, bstate=None):
         """
         Reloads the board colors and content.
         Uses recursive upload for more complex cases (e.g. step back).
@@ -112,23 +112,23 @@ class Terrain(Canvas):
                 self.b = copy.deepcopy(bstate)
             for i in range(self.b.height):
                 for j in range(self.b.width):
-                    self.reloadBoard(i, j, val=None, bstate=None)
+                    self.reload_board(i, j, val=None, bstate=None)
         elif val is None:
             if self.b.board[i][j] == -1:
-                self.p[i][j].setColor(self.PLAYER_ONE_TOKEN_COLOR)
+                self.p[i][j].set_color(self.PLAYER_ONE_TOKEN_COLOR)
             elif self.b.board[i][j] == 1:
-                self.p[i][j].setColor(self.PLAYER_TWO_TOKEN_COLOR)
+                self.p[i][j].set_color(self.PLAYER_TWO_TOKEN_COLOR)
             elif self.b.board[i][j] == 0:
-                self.p[i][j].setColor(self.EMPTY_SLOT_COLOR)
+                self.p[i][j].set_color(self.EMPTY_SLOT_COLOR)
         else:
             self.b.board[i][j] = val
-            self.reloadBoard(i, j)
+            self.reload_board(i, j)
 
-    def runComputerMove(self):
+    def run_computer_move(self):
         row, col = self.game.current_player.get_move(self.b)
-        assert self.b.validMove(row, col)
+        assert self.b.valid_move(row, col)
         self.b.last_move = [row, col]
-        self.reloadBoard(row, col, self.game.current_player.id)
+        self.reload_board(row, col, self.game.current_player.id)
 
     def action(self, event):
         self.last_bstate = copy.deepcopy(self.b)
@@ -136,19 +136,19 @@ class Terrain(Canvas):
         # Human Action
         if not self.winner:
             col = int(event.x / 71)  # TODO: magic number here
-            row = self.b.tryMove(col)
+            row = self.b.try_move(col)
 
             if row == -1:
                 return
             else:
-                self.reloadBoard(row, col, self.game.current_player.id)
+                self.reload_board(row, col, self.game.current_player.id)
 
             self.b.last_move = [row, col]
             self.game.change_turn()
-            self.setPostMoveState()
+            self.set_post_move_state()
             self.update()
 
-    def setPostMoveState(self):
+    def set_post_move_state(self):
         whos_turn_txt = "{}'s Turn".format(str(self.game.current_player))
         self.info.t.config(text=whos_turn_txt)
 
@@ -170,10 +170,10 @@ def game_loop(root, game, terrain):
         # If current player is a Human Player, we just keep waiting for a
         # UI event to trigger the move
         if type(game.current_player) is not HumanPlayer:
-            terrain.runComputerMove()
+            terrain.run_computer_move()
             game.change_turn()
-            terrain.setPostMoveState()
-            terrain.reloadBoard()
+            terrain.set_post_move_state()
+            terrain.reload_board()
             terrain.update()
 
         if not terrain.winner and not terrain.b.terminal():

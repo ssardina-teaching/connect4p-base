@@ -10,7 +10,7 @@ class TestNode:
         child_state = self.board  # TODO really should be a different board state
         move = 3
 
-        node.addChild(child_state, move)
+        node.add_child(child_state, move)
 
         assert len(node.children) is 1
         assert type(node.children[0]) is Node
