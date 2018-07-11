@@ -45,6 +45,15 @@ class Board(object):
         """
         return row >= 0 and self.tryMove(col) == row
 
+    def valid_moves(self):
+        """
+        Returns: A generator of all valid moves in the current board state
+        """
+        for col in self.width:
+            for row in self.height:
+                if self.valid_move(row, col):
+                    yield (row, col)
+
     def terminal(self):
         """
         Returns true when the game is finished, otherwise false.
