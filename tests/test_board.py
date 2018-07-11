@@ -6,7 +6,7 @@ class TestBoard:
         board = Board()
 
         for i in range(board.width):
-            col = board.tryMove(i)
+            col = board.try_move(i)
             # expected position is bottom of board
             assert col == board.height - 1
 
@@ -18,17 +18,17 @@ class TestBoard:
             board.board[i][column_to_fill] = 1
 
         # Placement in column should now fail
-        assert board.tryMove(column_to_fill) == -1
+        assert board.try_move(column_to_fill) == -1
         # Other columns should still be valid
-        assert board.tryMove(column_to_fill + 1) >= 0
+        assert board.try_move(column_to_fill + 1) >= 0
 
     def test_valid_move_on_valid_move(self):
         board = Board()
 
         col = 2
         # at start, a peice should be placed on the bottom
-        assert board.validMove(board.height - 1, col)
-        assert not board.validMove(board.height - 2, col)
+        assert board.valid_move(board.height - 1, col)
+        assert not board.valid_move(board.height - 2, col)
 
     def test_terminal_on_finished_game(self):
         board = Board()
