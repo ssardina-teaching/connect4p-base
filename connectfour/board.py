@@ -25,6 +25,19 @@ class Board(object):
         self.current_player_score = [0, 0]
         self.num_to_connect = 4  # TODO: should be variable
 
+    def get_cell_value(self, row, col):
+        """
+        Access the board's underlying cell array and retreive the value
+        at a specific (row, col) location.
+        1 -> Player One token
+        2 -> Player Two token
+        0 -> Empty
+        """
+        if row >= self.height or col >= self.width:
+            raise ValueError('({}, {}) is an invalid location on the board')
+
+        return self.board[row][col]
+
     def try_move(self, move):
         """
         Takes the current board and a possible move specified

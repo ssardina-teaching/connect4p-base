@@ -12,6 +12,16 @@ def manhattan_distance(start, end):
     return abs(ex - sx) + abs(ey - sy)
 
 
+def player_token_locations(board, player):
+    """
+    A generator of cell locations where the specified player has a token.
+    """
+    for row in range(board.height):
+        for col in range(board.width):
+            if board.get_cell_value(row, col) == player.id:
+                yield (row, col)
+
+
 def delay_move_execution(move_fn):
     """
     A decorator function that will ensure the wrapped move function
