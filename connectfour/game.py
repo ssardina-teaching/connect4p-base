@@ -3,6 +3,7 @@ import argparse
 from connectfour.gui import start_game
 from connectfour.board import Board
 from connectfour.agents.computer_player import MonteCarloAgent, RandomAgent
+from connectfour.agents.agent_XXXXXX import AgentXXXXXX
 from connectfour.agents.agent import HumanPlayer
 
 MAX_GAME_WIDTH = MAX_GAME_HEIGHT = 100
@@ -11,7 +12,8 @@ MIN_GAME_WIDTH = MIN_GAME_HEIGHT = 4
 PLAYER_TYPE_MAP = {
     'HumanPlayer': HumanPlayer,
     'RandomAgent': RandomAgent,
-    'MonteCarloAgent': MonteCarloAgent
+    'MonteCarloAgent': MonteCarloAgent,
+    'AgentXXXXXX': AgentXXXXXX
 }
 
 
@@ -20,8 +22,8 @@ class Game:
     Manages the players of the Game
     """
 
-    PLAYER_ONE_ID = -1
-    PLAYER_TWO_ID = 1
+    PLAYER_ONE_ID = 1
+    PLAYER_TWO_ID = 2
 
     def __init__(self, player_one, player_two, board_height, board_width, fast_play=False):
         self.player_one = player_one
