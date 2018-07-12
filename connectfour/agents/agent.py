@@ -10,7 +10,6 @@ class Agent:
         Returns:
             A tuple of two integers, (row, col)
         """
-        # TODO: an agent should return a move, not a whole new board
         raise NotImplementedError
 
     def __repr__(self):
