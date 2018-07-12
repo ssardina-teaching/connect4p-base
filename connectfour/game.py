@@ -45,6 +45,20 @@ class Game:
         self.current_player = self.player_one
 
 
+def validate_args(args):
+    if args.player_one not in PLAYER_TYPE_MAP:
+        raise RuntimeError("'{}' is not a valid player type".format(args.player_one))
+
+    if args.player_two not in PLAYER_TYPE_MAP:
+        raise RuntimeError("'{}' is not a valid player type".format(args.player_two))
+
+    if (
+        args.no_graphics and
+        (args.player_one == 'HumanPlayer' or args.player_two == 'HumanPlayer')
+    ):
+        raise RuntimeError("Cannot have human player when running with no graphics")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Set up the game.")
     parser.add_argument(
@@ -86,18 +100,16 @@ def main():
         action="store_true",
         help="disables the delay between computer moves, making the game much faster.",
     )
+    parser.add_argument(
+        "--no-graphics",
+        action='store_true',
+        help='No graphics display for Connect4 game.'
+    )
 
     args = parser.parse_args()
-
-    if args.player_one not in PLAYER_TYPE_MAP:
-        raise RuntimeError("'{}' is not a valid player type".format(args.player_one))
-    else:
-        player_one = PLAYER_TYPE_MAP[args.player_one]("Player 1")
-
-    if args.player_two not in PLAYER_TYPE_MAP:
-        raise RuntimeError("'{}' is not a valid player type".format(args.player_two))
-    else:
-        player_two = PLAYER_TYPE_MAP[args.player_two]("Player 2")
+    validate_args(args)
+    player_one = PLAYER_TYPE_MAP[args.player_one]("Player 1")
+    player_two = PLAYER_TYPE_MAP[args.player_two]("Player 2")
 
     g = Game(
         player_one,
