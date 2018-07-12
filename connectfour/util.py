@@ -20,7 +20,7 @@ def delay_move_execution(move_fn):
     delay on move speed.
 
     Args:
-        move_fn: The function which executes a computer move. Take no arguments.
+        move_fn: The function which executes a computer move. Takes no arguments.
     """
     max_execution_time_in_sec = 1
 

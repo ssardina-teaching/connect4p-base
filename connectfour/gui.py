@@ -114,9 +114,9 @@ class Terrain(Canvas):
                 for j in range(self.b.width):
                     self.reload_board(i, j, val=None, bstate=None)
         elif val is None:
-            if self.b.board[i][j] == -1:
+            if self.b.board[i][j] == self.game.PLAYER_ONE_ID:
                 self.p[i][j].set_color(self.PLAYER_ONE_TOKEN_COLOR)
-            elif self.b.board[i][j] == 1:
+            elif self.b.board[i][j] == self.game.PLAYER_TWO_ID:
                 self.p[i][j].set_color(self.PLAYER_TWO_TOKEN_COLOR)
             elif self.b.board[i][j] == 0:
                 self.p[i][j].set_color(self.EMPTY_SLOT_COLOR)

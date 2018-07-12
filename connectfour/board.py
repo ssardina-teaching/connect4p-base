@@ -17,6 +17,13 @@ class Board(object):
         self.width = len(self.board[0])
         self.height = len(self.board)
         self.last_move = last_move
+        self.winning_zones = self._build_winning_zones_map()
+        self.score_array = [
+            [0] * self._num_of_winning_zones(),
+            [0] * self._num_of_winning_zones()
+        ]
+        self.current_player_score = [0, 0]
+        self.num_to_connect = 4  # TODO: should be variable
 
     def try_move(self, move):
         """
@@ -49,8 +56,8 @@ class Board(object):
         """
         Returns: A generator of all valid moves in the current board state
         """
-        for col in self.width:
-            for row in self.height:
+        for col in range(self.width):
+            for row in range(self.height):
                 if self.valid_move(row, col):
                     yield (row, col)
 
@@ -173,3 +180,97 @@ class Board(object):
                             k += 1
                             m += 1
         return 0
+
+    def update_scores(self, x, y, current_player, is_player_one):
+        this_difference = 0
+        other_difference = 0
+        current_score_array = self.score_array
+        if is_player_one:
+            player = 0
+            other_player = 1
+        else:
+            player = 1
+            other_player = 0
+
+        # agent = current_state->agents[(depth % 2 == 1) ? player : other(player)];
+        # double score;
+
+        # Update line-scores
+        for i in range(len(self.winning_zones[x][y])):
+            win_index = self.winning_zones[x][y][i]
+            this_difference += current_score_array[player][win_index]
+            other_difference += current_score_array[other_player][win_index]
+            current_score_array[player][win_index] += 1
+
+        # TODO: Don't think we need this
+        # if (agent != NULL)
+        # {
+        #    score = agent->agentFunction(current_state, player, x, y);
+        #
+        #    current_state->score[player] = score;
+        #    current_state->score[other_player] = 0;
+        # }
+
+    def _build_winning_zones_map(self):
+        size_y = self.height
+        size_x = self.width
+        i = j = k = win_index = 0
+        map_ = []
+        num_to_connect = 4  # TODO: Needs eventually to be variable
+
+        # initialise the zones maps
+        for i in range(size_x):
+            map_.append([])
+            for j in range(size_y):
+                map_[i].append([])
+
+        # Fill in the horizontal win positions
+        for i in range(size_y):
+            for j in range(size_x-num_to_connect+1):
+                for k in range(num_to_connect):
+                    win_indices = map_[j+k][i]
+                    win_indices.append(win_index)
+                win_index += 1
+
+        # Fill in the vertical win positions
+        for i in range(size_x):
+            for j in range(size_y-num_to_connect+1):
+                for k in range(num_to_connect):
+                    win_indices = map_[i][j+k]
+                    win_indices.append(win_index)
+                win_index += 1
+
+        # Fill in the forward diagonal win positions
+        for i in range(size_y - num_to_connect + 1):
+            for j in range(size_x-num_to_connect+1):
+                for k in range(num_to_connect):
+                    win_indices = map_[j+k][i+k]
+                    win_indices.append(win_index)
+                win_index += 1
+
+        # Fill in the backward diagonal win positions
+        for i in range(size_y - num_to_connect + 1):
+            for j in range(size_x - 1, num_to_connect - 1 - 1, -1):
+                for k in range(num_to_connect):
+                    win_indices = map_[j-k][i+k]
+                    win_indices.append(win_index)
+                win_index += 1
+
+        return map_
+
+    def _num_of_winning_zones(self, num_to_connect=4):
+        if self.width < num_to_connect and self.height < num_to_connect:
+            return 0
+        elif self.width < num_to_connect:
+            return self.width * ((self.height - num_to_connect) + 1)
+        elif self.height < num_to_connect:
+            return self.height * ((self.width - num_to_connect) + 1)
+        else:
+            return (
+                4 * self.width * self.height -
+                3 * self.width * num_to_connect -
+                3 * self.height * num_to_connect +
+                3 * self.width + 3 * self.height -
+                4 * num_to_connect +
+                2 * num_to_connect * num_to_connect + 2
+            )
