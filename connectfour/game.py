@@ -25,7 +25,15 @@ class Game:
     PLAYER_ONE_ID = 1
     PLAYER_TWO_ID = 2
 
-    def __init__(self, player_one, player_two, board_height, board_width, fast_play=False):
+    def __init__(
+        self,
+        player_one,
+        player_two,
+        board_height,
+        board_width,
+        fast_play=False,
+        auto_close=False
+    ):
         self.player_one = player_one
         self.player_two = player_two
         self.current_player = self.player_one
@@ -33,6 +41,7 @@ class Game:
         self.player_two.id = self.PLAYER_TWO_ID
         self.board = Board(height=board_height, width=board_width)
         self.fast_play = fast_play
+        self.exit_on_game_end = auto_close
 
     def change_turn(self):
         if self.current_player == self.player_one:
@@ -105,6 +114,11 @@ def main():
         action='store_true',
         help='No graphics display for Connect4 game.'
     )
+    parser.add_argument(
+        "--auto-close",
+        action='store_true',
+        help='Shutdown the program after then game ends in a win or draw.'
+    )
 
     args = parser.parse_args()
     validate_args(args)
@@ -117,6 +131,7 @@ def main():
         args.board_height,
         args.board_width,
         args.fast,
+        args.auto_close
     )
     start_game(g)
 
