@@ -9,7 +9,14 @@ class Board(object):
     DEFAULT_WIDTH = 7
     DEFAULT_HEIGHT = 6
 
-    def __init__(self, board=None, height=None, width=None, last_move=[None, None]):
+    def __init__(
+        self,
+        board=None,
+        height=None,
+        width=None,
+        last_move=[None, None],
+        num_to_connect=4
+    ):
         if board is not None and (height is not None or width is not None):
             raise RuntimeError('Cannot specify both a board and a board size value')
 
@@ -17,13 +24,13 @@ class Board(object):
         self.width = len(self.board[0])
         self.height = len(self.board)
         self.last_move = last_move
+        self.num_to_connect = num_to_connect
         self.winning_zones = self._build_winning_zones_map()
         self.score_array = [
-            [0] * self._num_of_winning_zones(),
-            [0] * self._num_of_winning_zones()
+            [0] * self._num_of_winning_zones(num_to_connect),
+            [0] * self._num_of_winning_zones(num_to_connect)
         ]
         self.current_player_score = [0, 0]
-        self.num_to_connect = 4  # TODO: should be variable
 
     def get_cell_value(self, row, col):
         """
@@ -145,7 +152,7 @@ class Board(object):
             for i in range(1, self.width):
                 if row[i] == curr:
                     same_count += 1
-                    if same_count == 4 and curr != 0:
+                    if same_count == self.num_to_connect and curr != 0:
                         return curr
                 else:
                     same_count = 1
@@ -159,7 +166,7 @@ class Board(object):
             for j in range(1, self.height):
                 if self.board[j][i] == curr:
                     same_count += 1
-                    if same_count == 4 and curr != 0:
+                    if same_count == self.num_to_connect and curr != 0:
                         return curr
                 else:
                     same_count = 1
@@ -173,8 +180,8 @@ class Board(object):
         ]
 
         for b in boards:
-            for i in range(self.width - 4 + 1):
-                for j in range(self.height - 4 + 1):
+            for i in range(self.width - self.num_to_connect + 1):
+                for j in range(self.height - self.num_to_connect + 1):
                     if i > 0 and j > 0:  # would be a redundant diagonal
                         continue
 
@@ -185,7 +192,7 @@ class Board(object):
                     while k < self.height and m < self.width:
                             if b[k][m] == curr:
                                 same_count += 1
-                                if same_count is 4 and curr != 0:
+                                if same_count is self.num_to_connect and curr != 0:
                                     return curr
                             else:
                                 same_count = 1
@@ -229,7 +236,7 @@ class Board(object):
         size_x = self.width
         i = j = k = win_index = 0
         map_ = []
-        num_to_connect = 4  # TODO: Needs eventually to be variable
+        num_to_connect = self.num_to_connect
 
         # initialise the zones maps
         for i in range(size_x):
