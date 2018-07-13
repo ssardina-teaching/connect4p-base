@@ -6,6 +6,7 @@ from connectfour.util import delay_move_execution
 import copy
 import tkinter.font
 from tkinter import Frame, Canvas, Tk, Label, NSEW, Button
+import time
 
 LEFT_MOUSE_CLICK = "<Button-1>"
 ROW_SPACE = int(400 / 6)
@@ -178,6 +179,9 @@ def game_loop(root, game, terrain):
 
         if not terrain.winner and not terrain.b.terminal():
             root.after(100, inner)
+        elif terrain.winner and terrain.game.exit_on_game_end:
+            time.sleep(1)
+            exit(1)
 
     return inner
 
