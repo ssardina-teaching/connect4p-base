@@ -182,7 +182,7 @@ def game_loop(root, game, terrain):
             root.after(100, inner)
         elif terrain.winner and terrain.game.exit_on_game_end:
             time.sleep(1)
-            exit(1)
+            run_exit(game, game.board.winner())
 
     return inner
 
