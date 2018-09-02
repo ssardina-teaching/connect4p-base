@@ -31,6 +31,28 @@ As an example, we can run:
 
 To have a `RandomAgent` play against yourself.
 
+### Options
+
+* `--player-one PLAYER_ONE` - Set the agent for player one of the game
+* `--player-two PLAYER_TWO` - Set the agent for player two of the game
+* `--board-height [4-100]` - Set the number of rows in the board
+* `--board-width [4-100]` - Set the number of columns in the board
+* `--fast` - disables the delay between computer moves, making the game much faster.
+* `--no-graphics` - No graphics display for Connect4 game.
+* `--auto-close` - Shutdown the program after then game ends in a win or
+
+### Post-game Console Output
+
+In order to facilitate running auto-grader scripts against this program, it will output JSON formatted game result data on game exit. It's structure is as follows:
+
+```
+{
+  "end_state": "win" | "draw",
+  "winner_id": 1 | 2 | null,
+  "num_moves": INT
+}
+```
+
 ## Setup
 
 ### Prerequisites
@@ -50,4 +72,4 @@ Run `pipenv run python -m pytest tests/` (You can omit `pipenv run` if you're in
 
 This project uses [`black`](https://github.com/ambv/black) to keep code neat and standardised. It should already have been installed during project installation (see [Installation](#installation) section).
 
-Run `black` with: `pipenv run black connectfour tests` g(You can omit `pipenv run` if you're in a `pipenv shell`)
+Run `black` with: `pipenv run black connectfour tests` (You can omit `pipenv run` if you're in a `pipenv shell`)
