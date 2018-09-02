@@ -186,7 +186,29 @@ def game_loop(root, game, terrain):
     return inner
 
 
-def start_game(game):
+def run_headless_game(game):
+    ended = False
+    while True:
+        row, col = game.current_player.get_move(game.board)
+        game.board.board[row][col] = game.current_player.id
+        game.change_turn()
+
+        result = game.board.winner()
+        if result == game.PLAYER_ONE_ID:
+            print("{} won!".format(game.player_one))
+            ended = True
+        elif result == game.PLAYER_TWO_ID:
+            print("{} won!".format(game.player_two))
+            ended = True
+        elif game.board.terminal():
+            print("Draw")
+            ended = True
+
+        if ended:
+            exit(0)
+
+
+def run_graphics_game(game):
     root = Tk()
     root_height = game.board.height * ROW_SPACE
     root_width = game.board.width * COL_SPACE
@@ -210,3 +232,13 @@ def start_game(game):
     Button(root, text="Exit", command=close).grid(row=4, column=0, pady=2)
 
     root.mainloop()
+
+
+def start_game(game, graphics=True):
+    if not graphics and (game.player_one == HumanPlayer or game.player_two == HumanPlayer):
+        raise RuntimeError('Cannot run without graphics if you play with a Human agent')
+
+    if graphics:
+        run_graphics_game(game)
+    else:
+        run_headless_game(game)
