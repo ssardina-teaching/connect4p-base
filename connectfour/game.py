@@ -1,6 +1,6 @@
 import argparse
 
-from connectfour.gui import start_game
+from connectfour.ui import start_game
 from connectfour.board import Board
 from connectfour.agents.computer_player import MonteCarloAgent, RandomAgent
 from connectfour.agents.agent_XXXXXX import AgentXXXXXX
@@ -42,12 +42,16 @@ class Game:
         self.board = Board(height=board_height, width=board_width)
         self.fast_play = fast_play
         self.exit_on_game_end = auto_close
+        self.metrics = {
+            'num_moves': 0
+        }
 
     def change_turn(self):
         if self.current_player == self.player_one:
             self.current_player = self.player_two
         else:
             self.current_player = self.player_one
+        self.metrics['num_moves'] += 1
 
     def reset(self):
         self.board = Board(height=self.board.height, width=self.board.width)
