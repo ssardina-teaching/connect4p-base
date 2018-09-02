@@ -191,7 +191,7 @@ def run_exit(game, result):
     output = {}
     if not result:
         output['end_state'] = 'draw'
-        output['winner_id'] = ''
+        output['winner_id'] = None
     else:
         output['end_state'] = 'win'
         output['winner_id'] = result
