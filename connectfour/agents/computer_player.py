@@ -3,6 +3,7 @@ import random
 from connectfour.agents.monte_carlo import Node, MTCS
 from connectfour.agents.agent import Agent
 
+MAX_DEPTH = 1000
 
 class MonteCarloAgent(Agent):
     def __init__(self, name):
@@ -17,7 +18,7 @@ class MonteCarloAgent(Agent):
         Returns the best move using MonteCarlo Tree Search
         """
         o = Node(board)
-        return MTCS(3000, o, factor, self.id)
+        return MTCS(MAX_DEPTH, o, factor, self.id)
 
     def _find_move_from_new_board_state(self, old, new):
         """
