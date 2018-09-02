@@ -1,6 +1,6 @@
 import argparse
 
-from connectfour.gui import start_game
+from connectfour.ui import start_game
 from connectfour.board import Board
 from connectfour.agents.computer_player import MonteCarloAgent, RandomAgent
 from connectfour.agents.agent_XXXXXX import AgentXXXXXX

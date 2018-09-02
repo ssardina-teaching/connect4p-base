@@ -5,6 +5,7 @@ from connectfour.agents.agent import Agent
 
 MAX_DEPTH = 1000
 
+
 class MonteCarloAgent(Agent):
     def __init__(self, name):
         super().__init__(name)
