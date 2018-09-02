@@ -4,6 +4,7 @@ from connectfour.agents.agent import HumanPlayer
 from connectfour.util import delay_move_execution
 
 import copy
+import json
 import tkinter.font
 from tkinter import Frame, Canvas, Tk, Label, NSEW, Button
 import time
@@ -181,31 +182,34 @@ def game_loop(root, game, terrain):
             root.after(100, inner)
         elif terrain.winner and terrain.game.exit_on_game_end:
             time.sleep(1)
-            exit(1)
+            run_exit(game, game.board.winner())
 
     return inner
 
 
+def run_exit(game, result):
+    output = {}
+    if not result:
+        output['end_state'] = 'draw'
+        output['winner_id'] = ''
+    else:
+        output['end_state'] = 'win'
+        output['winner_id'] = result
+
+    output['num_moves'] = game.metrics['num_moves']
+    print(json.dumps(output))
+    exit(0)
+
+
 def run_headless_game(game):
-    ended = False
     while True:
         row, col = game.current_player.get_move(game.board)
         game.board.board[row][col] = game.current_player.id
         game.change_turn()
 
         result = game.board.winner()
-        if result == game.PLAYER_ONE_ID:
-            print("{} won!".format(game.player_one))
-            ended = True
-        elif result == game.PLAYER_TWO_ID:
-            print("{} won!".format(game.player_two))
-            ended = True
-        elif game.board.terminal():
-            print("Draw")
-            ended = True
-
-        if ended:
-            exit(0)
+        if result or game.board.terminal():
+            run_exit(game, result)
 
 
 def run_graphics_game(game):
