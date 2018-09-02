@@ -133,7 +133,7 @@ def main():
         args.fast,
         args.auto_close
     )
-    start_game(g)
+    start_game(g, graphics=(not args.no_graphics))
 
 
 if __name__ == "__main__":
