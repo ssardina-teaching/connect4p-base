@@ -12,11 +12,9 @@ Connect 4 is a two-player game in which the players take turns dropping colored 
 
 ### Run
 
-```
 1. `git clone https://github.com/thundergolfer/rmit-connectfour.git`
 2. `cd rmit-connectfour`
 3. `python -m connectfour.game` (default configuration will be run)
-```
 
 ### Configuration and CLI
 
