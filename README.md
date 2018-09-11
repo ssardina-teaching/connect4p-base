@@ -1,8 +1,6 @@
 # RMIT AI - Connect4
 
-<p align="center">
-  <img src="https://github.com/Alfo5123/Connect4/blob/master/img/game_example.gif" width="350"/>  
-</p>
+![screenshot](https://bitbucket.org/ssardina-teaching/rmit-connect4-base/raw/master/img/game_example-small.gif)
 
 ## About The Game
 
@@ -74,6 +72,17 @@ This project uses [`black`](https://github.com/ambv/black) to keep code neat and
 
 Run `black` with: `pipenv run black connectfour tests` (You can omit `pipenv run` if you're in a `pipenv shell`)
 
-## Credit & Acknowledgements 
+## Credit, Acknowledgements & Background
 
-- This project began as a fork of [Alfo5123/Connect4](https://github.com/Alfo5123/Connect4). The code was refactored and functionality was extended by [Jonathon Belotti](https://github.com/thundergolfer) as part of work done for RMIT University course support for the [*Artificial Intelligence*](http://www1.rmit.edu.au/courses/004123) subject.  
+This project began as a fork of [Alfo5123/Connect4](https://github.com/Alfo5123/Connect4) as part of work done for RMIT University course support for the [*COSC1125/COSC1127 Artificial Intelligence*](http://www1.rmit.edu.au/courses/004123) subject.  
+
+The code was refactored and functionality was extended by [Jonathon Belotti](https://github.com/thundergolfer) under the guidance of A/Prof. Sebastian Sardina in charge of the RMIT AI course. The improvements & functionalities added are:
+
+* Migration to latest Python 3.6.
+* Skeleton code available (for students to elaborate).
+* Headless execution (i.e., no GUI).
+* Fast execution (i.e., no delays).
+* Change of board size.
+* Dump of game statistics into a JSON file.
+
+

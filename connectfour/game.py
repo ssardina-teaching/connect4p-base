@@ -12,8 +12,7 @@ MIN_GAME_WIDTH = MIN_GAME_HEIGHT = 4
 PLAYER_TYPE_MAP = {
     'HumanPlayer': HumanPlayer,
     'RandomAgent': RandomAgent,
-    'MonteCarloAgent': MonteCarloAgent,
-    'AgentXXXXXX': AgentXXXXXX
+    'MonteCarloAgent': MonteCarloAgent
 }
 
 
