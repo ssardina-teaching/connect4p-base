@@ -1,4 +1,4 @@
-# RMIT AI - Connect4
+# pConnect4 - Connect 4 in Python for RMIT COSC1125/1127 AI Course
 
 ![screenshot](https://bitbucket.org/ssardina-teaching/pconnect4-base/raw/master/img/game_example-small.gif)
 
