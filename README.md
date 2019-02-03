@@ -52,11 +52,16 @@ Run `black` with: `pipenv run black connectfour tests` (You can omit `pipenv run
 
 Currently this game allows only for the specification of particular player types for each player. This is done with the `--player-one XXX` and `--player-two YYY` options. 
 
+Player agents are located in `connectfour/agents` and are subclasses of agent class `Agent`.
+
+
 The currently available player types are:
 
 * `HumanPlayer` - Player is controlled by user via GUI **[DEFAULT OPTION]**
 * `RandomAgent` - Player is controlled by computer and just chooses random valid columns to place token
 * `MonteCarloAgent` - Player is controlled by computer and uses Monte Carlo Tree Search to find a good move
+* `StudentAgent` - Template player to complete by students. Currently, is a  `RandomAgent`
+
 
 As an example, we can run:
 
