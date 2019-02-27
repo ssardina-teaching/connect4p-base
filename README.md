@@ -4,7 +4,7 @@
   <img src="https://github.com/Alfo5123/Connect4/blob/master/img/game_example.gif" width="350"/>  
 </p>
 
-![screenshot](https://bitbucket.org/ssardina-teaching/rmit-connect4-base/raw/master/img/game_example-small.gif)
+![screenshot](/img/game_example-small.gif)
 
 ## About The Game
 
