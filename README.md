@@ -116,7 +116,7 @@ In order to facilitate running auto-grader scripts against this program, it will
 
 This project began as a fork of [Alfo5123/Connect4](https://github.com/Alfo5123/Connect4) as part of work done for RMIT University course support for the [*COSC1125/COSC1127 Artificial Intelligence*](http://www1.rmit.edu.au/courses/004123) subject.  
 
-The code was refactored and functionality was extended by [Jonathon Belotti](https://github.com/thundergolfer) under the guidance of A/Prof. Sebastian Sardina in charge of the RMIT AI course. The improvements & functionalities added are:
+The code was refactored and functionality was extended by [Jonathon Belotti](https://github.com/thundergolfer) under the guidance of [A/Prof. Sebastian Sardina](https://sites.google.com/site/ssardina/) in charge of the RMIT AI course. The improvements & functionalities added are:
 
 * Migration to latest Python 3.6.
 * Skeleton code available (for students to elaborate).
